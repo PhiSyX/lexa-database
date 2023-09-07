@@ -25,3 +25,9 @@ pub mod sgbd {
 
 pub use self::error::Error;
 pub use self::interface::SGBD;
+
+// ---- //
+// Type //
+// ---- //
+
+pub type Result<T> = std::result::Result<T, Error>;
