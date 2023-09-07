@@ -20,7 +20,7 @@
 // --------- //
 
 #[async_trait::async_trait]
-pub trait SGBD {
+pub trait SGBD: Clone {
 	type Pool;
 
 	/// Ouvre une connexion immédiate à la base de données.

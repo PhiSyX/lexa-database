@@ -31,6 +31,7 @@ pub type PgPool = sqlx::PgPool;
 // Structure //
 // --------- //
 
+#[derive(Clone)]
 pub struct PostgresSGBD {
 	/// URL de connexion à la base de données Postgres.
 	connection_url: String,
