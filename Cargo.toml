@@ -2,6 +2,9 @@
 name = "lexa-database"
 version = "0.1.0"
 edition = "2021"
+license-file = "LICENSE"
+repository = "https://github.com/PhiSyX/lexa-database"
+description = "Accès aux bases de données via SQLx"
 
 [features]
 # default = ["postgres-sgbd"]
