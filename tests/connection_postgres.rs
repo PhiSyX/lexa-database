@@ -15,18 +15,19 @@
 // ┃  file, You can obtain one at https://mozilla.org/MPL/2.0/.                ┃
 // ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
-use std::any;
+use lexa_database::sgbd::postgres::PostgresSGBD;
+use lexa_database::SGBD;
 
-// ----------- //
-// Énumération //
-// ----------- //
+#[tokio::test]
+async fn test_good_connect() {
+	let pg = PostgresSGBD::new("postgres://root:root@localhost:5432").await;
+	assert!(pg.is_ok());
+}
 
-#[derive(Debug)]
-#[derive(thiserror::Error)]
-#[error(
-	"\t\n[{}]: erreur liée à la base de données. Raison: {0}",
-	any::type_name::<Self>()
-)]
-pub enum Error {
-	SQLx(#[from] sqlx::Error),
+#[tokio::test]
+#[should_panic]
+async fn test_fail_connect() {
+	PostgresSGBD::new("postgres://user:pass@host:5432")
+		.await
+		.expect("Une connexion Postgres");
 }
