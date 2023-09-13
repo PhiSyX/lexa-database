@@ -1,6 +1,6 @@
 [package]
 name = "lexa-database"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2021"
 license-file = "LICENSE"
 repository = "https://github.com/PhiSyX/lexa-database"
@@ -12,12 +12,11 @@ postgres-sgbd = ["sqlx/postgres"]
 
 [dependencies]
 async-trait = "^0.1"
-sqlx = { version = "^0.7" }
+sqlx = { version = "^0.7", features = ["runtime-tokio"] }
 thiserror = { version = "^1.0" }
 
 [dev-dependencies]
 tokio = { version = "^1.32", features = ["macros", "test-util"] }
-sqlx = { version = "^0.7", features = ["runtime-tokio"] }
 
 [[test]]
 name = "test_connection_postgres"
