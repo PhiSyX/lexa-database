@@ -27,4 +27,7 @@ pub trait SGBD: Clone {
 	async fn create_pool(
 		url: impl AsRef<str> + Send + Sync,
 	) -> Result<Self::Pool, crate::Error>;
+
+	/// Pool de connexion de la base de données.
+	fn pool(&self) -> &Self::Pool;
 }

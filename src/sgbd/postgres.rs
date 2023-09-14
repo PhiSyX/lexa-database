@@ -46,11 +46,6 @@ impl PostgresSGBD {
 	pub fn connection_url(&self) -> &str {
 		&self.connection_url
 	}
-
-	/// Pool de connexion de la base de données Postgres
-	pub fn pool(&self) -> &PgPool {
-		&self.database_pool
-	}
 }
 
 // -------------- //
@@ -81,5 +76,10 @@ impl SGBD for PostgresSGBD {
 			.acquire_timeout(time::Duration::from_secs(Self::TIMEOUT_SECONDS));
 		let pool: Self::Pool = options.connect(url.as_ref()).await?;
 		Ok(pool)
+	}
+
+	/// Pool de connexion de la base de données Postgres
+	fn pool(&self) -> &Self::Pool {
+		&self.database_pool
 	}
 }
