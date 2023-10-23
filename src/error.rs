@@ -20,6 +20,7 @@ use std::any;
 	"\n\t[{}]: erreur liée à la base de données. Raison: {0}",
 	any::type_name::<Self>()
 )]
-pub enum Error {
+pub enum Error
+{
 	SQLx(#[from] sqlx::Error),
 }

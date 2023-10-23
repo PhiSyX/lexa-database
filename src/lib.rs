@@ -11,7 +11,8 @@
 mod error;
 mod interface;
 
-pub mod sgbd {
+pub mod sgbd
+{
 	#[cfg(feature = "postgres-sgbd")]
 	pub mod postgres;
 }

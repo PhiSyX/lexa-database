@@ -25,7 +25,8 @@ pub type PgPool = sqlx::PgPool;
 // --------- //
 
 #[derive(Clone)]
-pub struct PostgresSGBD {
+pub struct PostgresSGBD
+{
 	/// URL de connexion à la base de données Postgres.
 	connection_url: String,
 
@@ -37,13 +38,15 @@ pub struct PostgresSGBD {
 // Implémentation //
 // -------------- //
 
-impl PostgresSGBD {
+impl PostgresSGBD
+{
 	const MAX_IDLE: u64 = 8;
 	const MAX_OPEN: u32 = 32;
 	const TIMEOUT_SECONDS: u64 = 15;
 
 	/// URL de connexion à la base de données Postgres.
-	pub fn connection_url(&self) -> &str {
+	pub fn connection_url(&self) -> &str
+	{
 		&self.connection_url
 	}
 }
@@ -53,12 +56,12 @@ impl PostgresSGBD {
 // -------------- //
 
 #[async_trait::async_trait]
-impl SGBD for PostgresSGBD {
+impl SGBD for PostgresSGBD
+{
 	type Pool = PgPool;
 
-	async fn new(
-		connection_url: impl AsRef<str> + ToString + Send + Sync,
-	) -> Result<Self, crate::Error> {
+	async fn new(connection_url: impl AsRef<str> + ToString + Send + Sync) -> Result<Self, crate::Error>
+	{
 		let pool = Self::create_pool(&connection_url).await?;
 
 		Ok(Self {
@@ -67,19 +70,20 @@ impl SGBD for PostgresSGBD {
 		})
 	}
 
-	async fn create_pool(
-		url: impl AsRef<str> + Send + Sync,
-	) -> Result<Self::Pool, crate::Error> {
+	async fn create_pool(url: impl AsRef<str> + Send + Sync) -> Result<Self::Pool, crate::Error>
+	{
 		let options: pool::PoolOptions<_> = postgres::PgPoolOptions::new()
 			.idle_timeout(time::Duration::from_secs(Self::MAX_IDLE))
 			.max_connections(Self::MAX_OPEN)
-			.acquire_timeout(time::Duration::from_secs(Self::TIMEOUT_SECONDS));
+			.acquire_timeout(time::Duration::from_secs(Self::TIMEOUT_SECONDS))
+		;
 		let pool: Self::Pool = options.connect(url.as_ref()).await?;
 		Ok(pool)
 	}
 
 	/// Pool de connexion de la base de données Postgres
-	fn pool(&self) -> &Self::Pool {
+	fn pool(&self) -> &Self::Pool
+	{
 		&self.database_pool
 	}
 }

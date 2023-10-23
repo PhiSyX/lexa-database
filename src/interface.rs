@@ -13,20 +13,17 @@
 // --------- //
 
 #[async_trait::async_trait]
-pub trait SGBD: Clone {
+pub trait SGBD
+	: Sized
+	+ Clone
+{
 	type Pool;
 
 	/// Ouvre une connexion immédiate à la base de données.
-	async fn new(
-		connection_url: impl AsRef<str> + ToString + Send + Sync,
-	) -> Result<Self, crate::Error>
-	where
-		Self: Sized;
+	async fn new(connection_url: impl AsRef<str> + ToString + Send + Sync) -> Result<Self, crate::Error>;
 
 	/// Ouvre une pool de connexion à partir d'une URL.
-	async fn create_pool(
-		url: impl AsRef<str> + Send + Sync,
-	) -> Result<Self::Pool, crate::Error>;
+	async fn create_pool(url: impl AsRef<str> + Send + Sync) -> Result<Self::Pool, crate::Error>;
 
 	/// Pool de connexion de la base de données.
 	fn pool(&self) -> &Self::Pool;

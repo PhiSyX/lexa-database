@@ -12,14 +12,16 @@ use lexa_database::sgbd::postgres::PostgresSGBD;
 use lexa_database::SGBD;
 
 #[tokio::test]
-async fn test_good_connect() {
+async fn test_good_connect()
+{
 	let pg = PostgresSGBD::new("postgres://root:root@localhost:5432").await;
 	assert!(pg.is_ok());
 }
 
 #[tokio::test]
 #[should_panic]
-async fn test_fail_connect() {
+async fn test_fail_connect()
+{
 	PostgresSGBD::new("postgres://user:pass@host:5432")
 		.await
 		.expect("Une connexion Postgres");
